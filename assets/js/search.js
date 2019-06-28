@@ -33,3 +33,43 @@ function buildCard(element, components) {
         element.appendChild(components[i]);
     }
 }
+
+
+
+function getArticles(string, start, end){
+
+    let searchTerm = string;
+    let startYear = start;
+    let endYear = end;
+    
+    let queryURL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchTerm}&api-key=s5dWBTvGADVG9WGJM7s0zyY7CCws4UmO&`
+    
+    if (startYear !== '') {
+        queryURL += `&begin_date=${startYear}0101`;
+    }
+    
+    if (endYear !== '') {
+        queryURL += `&end_date=${endYear}1231`;
+    }
+    
+    console.log(queryURL);
+    
+    fetch(queryURL, {
+        method: 'GET'
+    })
+    .then(function (response) {
+        return response.json();
+    }).then(function (myJson) {
+        console.log(myJson);
+    })
+    }
+    
+    const searchBtn = document.getElementById('search-button');
+    
+    searchBtn.addEventListener('click', (e) => {
+        const searchTerm = document.getElementById('search-term').value;
+        const startYear = document.getElementById('start-year').value;
+        const endYear = document.getElementById('end-year').value;
+    
+        getArticles(searchTerm, startYear, endYear);
+    })
