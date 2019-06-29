@@ -1,6 +1,11 @@
 .jumbotron {
-background-color: navy;
-color: white;
-text-align: center;
-font-weight: bold;
+    background-color: navy;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.article-card {
+    border-bottom: 1px solid navy;
+    padding: 5px;
 }
