@@ -1,22 +1,22 @@
 function articleCard(headline, author, section, date) {
     // Pieces
-    const card = document.createElement('<div>');
+    const card = document.createElement('div');
     setAttributes(card, { class: 'article-card' });
 
-    const title = document.createElement('<div');
-    title.textContent(headline);
+    const title = document.createElement('div');
+    title.textContent = headline;
     setAttributes(title, { class: 'article-title' });
 
-    const byline = document.createElement('<div>');
-    byline.textContent(author);
+    const byline = document.createElement('div');
+    byline.textContent = author;
     setAttributes(byline, { class: 'article-byline' });
 
-    const category = document.createElement('<div>');
-    category.textContent(`Section: ${section}`);
+    const category = document.createElement('div');
+    category.textContent = `Section: ${section}`;
     setAttributes(category, { class: 'article-category' });
 
-    const pubDate = document.createElement('<div>');
-    pubDate.textContent(date);
+    const pubDate = document.createElement('div');
+    pubDate.textContent = date;
     setAttributes(pubDate, { class: 'article-date' });
 
     buildCard(card, [title, byline, category, pubDate]);
@@ -29,9 +29,14 @@ function setAttributes(element, attributes) {
 }
 
 function buildCard(element, components) {
+    
+    const resultsDiv = document.getElementById('results');
+    
     for (let i = 0; i < components.length; i++) {
         element.appendChild(components[i]);
     }
+
+    resultsDiv.appendChild(element);
 }
 
 
@@ -60,9 +65,22 @@ function getArticles(string, start, end){
     .then(function (response) {
         return response.json();
     }).then(function (myJson) {
-        console.log(myJson);
-    })
-    }
+        const data = myJson.response.docs;
+        const numRecords = document.getElementById('records').value;
+        console.log(data);
+        for (let i = 0; i < numRecords; i++){
+            const byline = data[i].byline.original;
+            const headline = data[i].headline.main;
+            const pubdate = data[i].pub_date;
+            // const url = data[i].web_url;
+            const section = data[i].section_name;
+
+            articleCard(headline, byline, section, pubdate);
+
+        }
+
+
+    })}
     
     const searchBtn = document.getElementById('search-button');
     
